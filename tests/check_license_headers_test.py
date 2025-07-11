@@ -29,8 +29,8 @@ def get_abspath_str(filename: str) -> str:
         ("valid_2.py", 0),
         ("invalid_owner.txt", 1),
         ("missing_header.py", 1),
-        ("tokenize_fail.yaml", 2),
-        ("tokenize_indentation_error.sh", 2),
+        ("content_tokenization_skipped.yaml", 0),
+        ("content_tokenization_skipped.sh", 0),
     ),
 )
 def test_check_license_headers(filename, expected_retval):

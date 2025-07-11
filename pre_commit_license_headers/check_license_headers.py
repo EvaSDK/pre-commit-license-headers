@@ -36,9 +36,7 @@ def check_license_headers(filepath: Path, header_pattern: str, debug: bool) -> b
     content_lines = []
 
     with filepath.open() as f:
-        tokens_generator = list(tokenize.generate_tokens(f.readline))
-
-        for token in tokens_generator:
+        for token in tokenize.generate_tokens(f.readline):
             if token.type not in HEADER_TOKENS:
                 # we've reached the end of the header
                 break
