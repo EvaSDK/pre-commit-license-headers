@@ -3,6 +3,8 @@
 # be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
 
 from pathlib import Path
+from tokenize import TokenError
+from unittest import mock
 
 import pytest
 
@@ -136,3 +138,15 @@ def test_ignored_owner(capsys):
     assert e.value.code == 1
     stdout, _ = capsys.readouterr()
     assert "'--owner' will be ignored" in stdout
+
+
+def test_tokenize_exception():
+    """check_license_headers raises TokenError marks file as skipped."""
+    with pytest.raises(SystemExit) as e:
+        with mock.patch(
+            "pre_commit_license_headers.check_license_headers.check_license_headers"
+        ) as m:
+            m.side_effect = [TokenError]
+            main(base_args + [get_abspath_str("valid_1.py")])
+    assert e.type == SystemExit
+    assert e.value.code == 2
